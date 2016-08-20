@@ -16,12 +16,12 @@ RUN apt-get update -y && \
     libfreetype6-dev \
     libpq-dev \
     libxml2-dev \
-    imagemagick \
+    zip \
     && rm -rf /var/lib/apt/lists/*
 
 # Install php extensions
  RUN docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr --with-freetype-dir=/usr/include/freetype2 \
-        && docker-php-ext-install mcrypt mbstring zip pcntl pdo_sqlite pdo_mysql gd
+        && docker-php-ext-install mcrypt mbstring zip pcntl pdo_sqlite pdo_mysql gd soap
 # Install awscli to help in aws deployments
 RUN pip install awscli
 # Install composer
