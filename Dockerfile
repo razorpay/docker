@@ -1,28 +1,51 @@
-FROM php:5.6 
+FROM debian:sid
+MAINTAINER pronav <pranavguptarulz@gmail.com>
 
-# Install required linux packages 
-RUN apt-get update -y && \
-    apt-get install -y libmcrypt-dev \
-    libssl-dev \
-    git-core \
-    libsqlite3-dev \
-    libmysqlclient18 \
-    python-pip \
-    libgd3 \
-    libpng3 \
-    libpng3-dev \
-    libjpeg62 \
-    libjpeg-dev \
-    libfreetype6-dev \
-    libpq-dev \
-    libxml2-dev \
-    zip \
-    && rm -rf /var/lib/apt/lists/*
+COPY conf/01_nodoc /etc/dpkg/dpkg.cfg.d/
 
-# Install php extensions
- RUN docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr --with-freetype-dir=/usr/include/freetype2 \
-        && docker-php-ext-install mcrypt mbstring zip pcntl pdo_sqlite pdo_mysql gd soap
-# Install awscli to help in aws deployments
-RUN pip install awscli
-# Install composer
-RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
+RUN rm -rf /usr/share/{doc,man,locale,i18n,info} \
+  && echo deb http://debianmirror.nkn.in/debian sid main > /etc/apt/sources.list \
+  && apt-get update && apt-get install -y --no-install-recommends \
+    awscli \
+    openjdk-8-jre-headless \
+    curl \
+    gnupg2 \
+  && curl -sL https://deb.nodesource.com/setup_6.x | bash - \
+  && apt-get install -y nodejs --no-install-recommends \
+  && npm install -g gulp \
+  && apt-get purge -y gnupg2 && apt autoremove -y \
+  && rm -rf /etc/apt/sources.list.d \
+  && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    php \
+    composer \
+    phpunit \
+    php-mysql \
+    mariadb-server \
+    xvfb \
+    chromium \
+    chromedriver \
+    fluxbox \
+    x11vnc \
+    xterm \
+    nano \
+  && rm -rf /usr/share/fluxbox/nls \
+  && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    firefox \
+    lsof \
+    procps \
+    php-mbstring \
+    php-curl \
+    php-zip \
+    php-mcrypt \
+  && rm -rf /var/lib/apt/lists/*
+
+RUN echo 1bcf108858b5422ba05da11b9c7de8ba > /etc/machine-id
+
+COPY conf/fluxbox/* /etc/X11/fluxbox/
+COPY files/* /
+
+ENTRYPOINT ["/entrypoint.sh"]
