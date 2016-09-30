@@ -1,3 +1,3 @@
 Dashboard testing box
 
-- `build.sh` first downloads selenium and then builds with tag `pronav/dashboard-testing`
+- `build.sh` first downloads selenium and then builds with tag `pronav/dash`
