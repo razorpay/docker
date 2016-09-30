@@ -15,11 +15,11 @@ export DB_MYSQL_PASSWORD=
 echo "Starting selenium server"
 /selenium &> /dev/null &
 
-echo "Starting vnc server"
-x11vnc &> /dev/null &
+# echo "Starting vnc server"
+# x11vnc &> /dev/null &
 
-echo "Starting fluxbox"
-fluxbox &> /dev/null &
+# echo "Starting fluxbox"
+# fluxbox &> /dev/null &
 
 echo "Starting mysql"
 service mysql start

@@ -1,5 +1,0 @@
-[begin] (Fluxbox)
-   [exec] (Bash) { x-terminal-emulator -T "Bash" -e /bin/bash --login} <>
-   [exec] (Firefox) {firefox} <>
-   [exec] (Chrome) {chromium --no-sandbox --no-gpu --disable-web-security --user-data-dir /root} <>
-[end]
