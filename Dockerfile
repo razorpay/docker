@@ -14,7 +14,8 @@ RUN rm -rf /usr/share/{doc,man,locale,i18n,info} \
     gnupg2 \
   && curl -sL https://deb.nodesource.com/setup_6.x | bash - \
   && apt-get install -y nodejs --no-install-recommends \
-  && npm install -g gulp \
+  && apt-get install yarn \
+  && yarn global add gulp \
   && apt-get purge -y gnupg2 && apt autoremove -y \
   && rm -rf /etc/apt/sources.list.d \
   && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
