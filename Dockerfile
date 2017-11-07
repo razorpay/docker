@@ -12,10 +12,9 @@ RUN rm -rf /usr/share/{doc,man,locale,i18n,info} \
     git \
     openssh-client \
     gnupg2 \
-  && curl -sL https://deb.nodesource.com/setup_6.x | bash - \
+  && curl -sL https://deb.nodesource.com/setup_9.x | bash - \
   && apt-get install -y nodejs --no-install-recommends \
-  && apt-get install yarn \
-  && yarn global add gulp \
+  && npm i -g gulp \
   && apt-get purge -y gnupg2 && apt autoremove -y \
   && rm -rf /etc/apt/sources.list.d \
   && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
